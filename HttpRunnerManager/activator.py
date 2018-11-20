@@ -1,11 +1,10 @@
-
 def process(request, **kwargs):
-    app = kwargs.pop('app', None)
+    app = 'ApiManager'
     fun = kwargs.pop('function', None)
     index = kwargs.pop('id', None)
 
-    if app == 'api':
-        app = 'ApiManager'
+    if fun is None:
+        fun = 'login'
     try:
         app = __import__("%s.views" % app)
         view = getattr(app, 'views')
