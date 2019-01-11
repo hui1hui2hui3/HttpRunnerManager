@@ -2,6 +2,10 @@
 .gitignore
 .idea/
 logs/
+upload/
+static/node_modules/
+suite/
+reports/
 celerybeat.pid
 **/__pycache__/
 Test Report.html

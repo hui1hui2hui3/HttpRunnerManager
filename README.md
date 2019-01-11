@@ -78,6 +78,7 @@ Key Features
 
 8. 启动服务,
     ```bash
+        cd static & npm install
         python manage.py runserver 0.0.0.0:8000
     ```
 
