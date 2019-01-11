@@ -105,7 +105,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('form').bootstrapValidator({
+        $('form').validator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -162,7 +162,7 @@
 
     /*表单信息异步传输*/
     function register_ajax(id) {
-        if ($(id).data('bootstrapValidator').isValid()) {
+        if (!$(id).data('bs.validator').hasErrors()) {
             var data = $(id).serializeJSON();
             var url;
             if (id === "#register_form") {
