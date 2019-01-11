@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
 .idea/
+**/package-lock.json
 logs/
 upload/
 static/node_modules/
