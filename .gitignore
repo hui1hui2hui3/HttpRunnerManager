@@ -2,7 +2,7 @@
 .gitignore
 .idea/
 **/package-lock.json
-logs/
+logs/*.log
 upload/
 static/node_modules/
 suite/

@@ -22,6 +22,8 @@ Key Features
 
 本地开发环境部署
 --------
+0. 进入static目录，执行`npm install`
+
 1. 安装mysql数据库服务端(推荐5.7+),并设置为utf-8编码，创建相应HttpRunner数据库，设置好相应用户名、密码，启动mysql
 
 2. 修改:HttpRunnerManager/HttpRunnerManager/settings.py里DATABASES字典和邮件发送账号相关配置
