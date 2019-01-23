@@ -11,3 +11,4 @@ celerybeat.pid
 **/__pycache__/
 Test Report.html
 ApiManager/templatetags/*.pyc
+.vscode/
