@@ -551,7 +551,7 @@ def upload_file_logic(files, project, module, account):
 
             if 'test' in test_case.keys():  # 忽略config
                 test_case.get('test')['case_info'] = test_dict
-
+                test_case.get('test')['request']['url']=parsePathParams(test_case.get('test')['request']['url'])
                 if 'validate' in test_case.get('test').keys():  # 适配validate两种格式
                     validate = test_case.get('test').pop('validate')
                     new_validate = []
@@ -644,3 +644,7 @@ def timestamp_to_datetime(summary, type=True):
             except Exception:
                 pass
     return summary
+
+def parsePathParams(url):
+    paths = url.split('/')[3:]
+    return ('/'+'/'.join(paths)).replace(':','$')
