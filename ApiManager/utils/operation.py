@@ -204,6 +204,24 @@ def add_config_data(type, **kwargs):
         return '字段长度超长，请重新编辑'
     return 'ok'
 
+''' 公共环境落地 '''
+def add_env_data(baseUrl):
+    env_opt = EnvInfo.objects
+    try:
+        if env_opt.is_exist_env(baseUrl):
+            logger.info("%s环境已经存在" % baseUrl)
+        else:
+            kwargs = {
+                "env_name": baseUrl,
+                "base_url": baseUrl,
+                "simple_desc": baseUrl
+            }
+            env_opt.insert_env(**kwargs)
+            logger.info("%s环境添加成功" % baseUrl)
+    except DataError:
+        logger.error('环境配置信息过长：{baseUrl}'.format(baseUrl=baseUrl))
+        return '字段长度超长，请重新编辑'
+    return 'ok'
 
 def add_suite_data(**kwargs):
     belong_project = kwargs.pop('project')

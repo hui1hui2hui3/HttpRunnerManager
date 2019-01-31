@@ -153,5 +153,8 @@ class EnvInfoManager(models.Manager):
     def get_env_name(self, index):
         return self.get(id=index).env_name
 
+    def is_exist_env(self, name):
+        return self.filter(env_name=name).count()>0
+
     def delete_env(self, index):
         self.get(id=index).delete()

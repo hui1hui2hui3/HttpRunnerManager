@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import platform
+from urllib.parse import urlparse
 from json import JSONDecodeError
 
 import yaml
@@ -13,7 +14,7 @@ from djcelery.models import PeriodicTask
 
 from ApiManager.models import ModuleInfo, TestCaseInfo, TestReports, TestSuite
 from ApiManager.utils.operation import add_project_data, add_module_data, add_case_data, add_config_data, \
-    add_register_data
+    add_register_data, add_env_data
 from ApiManager.utils.task_opt import create_task
 
 
@@ -551,7 +552,8 @@ def upload_file_logic(files, project, module, account):
 
             if 'test' in test_case.keys():  # 忽略config
                 test_case.get('test')['case_info'] = test_dict
-                test_case.get('test')['request']['url']=parsePathParams(test_case.get('test')['request']['url'])
+                urlDict = splitBaseAndRelUrl(test_case.get('test')['request']['url'])
+                test_case.get('test')['request']['url']= urlDict['relUrl']
                 if 'validate' in test_case.get('test').keys():  # 适配validate两种格式
                     validate = test_case.get('test').pop('validate')
                     new_validate = []
@@ -564,6 +566,7 @@ def upload_file_logic(files, project, module, account):
                     test_case.get('test')['validate'] = new_validate
 
                 add_case_data(type=True, **test_case)
+                add_env_data(urlDict['baseUrl'])
 
 
 def get_total_values():
@@ -645,6 +648,8 @@ def timestamp_to_datetime(summary, type=True):
                 pass
     return summary
 
-def parsePathParams(url):
-    paths = url.split('/')[3:]
-    return ('/'+'/'.join(paths)).replace(':','$')
+def splitBaseAndRelUrl(fullUrl):
+    urlParseObj = urlparse(fullUrl)
+    baseUrl = urlParseObj.scheme + "://" + urlParseObj.netloc
+    relUrl = urlParseObj.path.replace(':','$')
+    return {'baseUrl':baseUrl, 'relUrl': relUrl}
